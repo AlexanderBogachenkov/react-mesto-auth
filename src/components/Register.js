@@ -25,7 +25,7 @@ function Register({ loggedIn, handleRegister, isLoading }) {
   };
 
   return (
-    !isLoading && (
+    !loggedIn && (
       <div className="register">
         <form
           name="register"

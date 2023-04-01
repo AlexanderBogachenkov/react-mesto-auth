@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { api } from "../utils/Api";
 import * as Auth from "../utils/Auth";
@@ -29,17 +30,13 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
   const [cardForDelete, setCardForDelete] = React.useState({});
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(false);
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [email, setEmail] = React.useState("");
   const [notification, setNotification] = React.useState({ text: "", pic: "" });
   const [isInfoToolTipOpen, setIsInfoToolTipOpen] = React.useState(false);
 
   const navigate = useNavigate();
-
-  React.useEffect(() => {
-    tokenCheck();
-  }, []);
 
   //При каждом рендере
   React.useEffect(() => {
@@ -239,29 +236,55 @@ function App() {
     navigate("/sign-in");
   };
 
-  const tokenCheck = () => {
-    setIsLoading(true);
-    let token = localStorage.getItem("token");
-    // console.log("token ->", token);
+  // const tokenCheck = () => {
+  //   let token = localStorage.getItem("token");
+  //   // console.log("token ->", token);
+  //   if (token) {
+  //     Auth.getContent(token)
+  //       .then((res) => {
+  //         if (res) {
+  //           setLoggedIn(true);
+  //           setEmail(res.data.email);
+  //           // console.log("res ->", res);
+  //           navigate("/", { replace: true });
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         console.log("tokenCheckErr -> ", err);
+  //       });
+  //   }
+  // };
+
+  const tokenCheck = React.useCallback(() => {
+    // setIsLoading(true);
+    // если у пользователя есть токен в localStorage,
+    // эта функция проверит валидность токена
+    const token = localStorage.getItem("token");
     if (token) {
+      // проверим токен
       Auth.getContent(token)
-        .then((res) => {
-          if (res) {
+        .then((userData) => {
+          if (userData) {
+            // авторизуем пользователя
             setLoggedIn(true);
-            setEmail(res.data.email);
-            // console.log("res ->", res);
+            setEmail(userData.data.email);
             navigate("/", { replace: true });
           }
         })
         .catch((err) => {
-          console.log("tokenCheckErr -> ", err);
+          console.log("tokenCheckErr -> ", err); // выведем ошибку в консоль
         })
         .finally(() => {
-          //Добавим изменение в тексте кнопки
           setIsLoading(false);
         });
+    } else {
+      setIsLoading(false);
     }
-  };
+  }, [navigate]);
+
+  React.useEffect(() => {
+    tokenCheck();
+  }, [tokenCheck]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -286,7 +309,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          {console.log("isLoading ->", isLoading)}
+          {/* {console.log("isLoading ->", isLoading)} */}
 
           <Route
             path="/sign-in"

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Login = ({ handleLogin, isLoading }) => {
+const Login = ({ handleLogin, isLoading, loggedIn }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   //   const [loginBtnText, setLoginBtnText] = useState("Войти");
@@ -21,7 +21,7 @@ const Login = ({ handleLogin, isLoading }) => {
   };
 
   return (
-    !isLoading && (
+    !loggedIn && (
       <div className="login">
         <form name="login" className="login__container" onSubmit={handleSubmit}>
           <h2 className="login__title">Вход</h2>
