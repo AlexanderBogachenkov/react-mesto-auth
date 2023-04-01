@@ -236,25 +236,6 @@ function App() {
     navigate("/sign-in");
   };
 
-  // const tokenCheck = () => {
-  //   let token = localStorage.getItem("token");
-  //   // console.log("token ->", token);
-  //   if (token) {
-  //     Auth.getContent(token)
-  //       .then((res) => {
-  //         if (res) {
-  //           setLoggedIn(true);
-  //           setEmail(res.data.email);
-  //           // console.log("res ->", res);
-  //           navigate("/", { replace: true });
-  //         }
-  //       })
-  //       .catch((err) => {
-  //         console.log("tokenCheckErr -> ", err);
-  //       });
-  //   }
-  // };
-
   const tokenCheck = React.useCallback(() => {
     // setIsLoading(true);
     // если у пользователя есть токен в localStorage,

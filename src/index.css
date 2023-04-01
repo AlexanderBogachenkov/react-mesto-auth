@@ -85,13 +85,11 @@
 @import url('./blocks/popup/__notification-pic/popup__notification-pic.css');
 @import url('./blocks/popup/popup_type_tip.css');
 
+@import url('./blocks/root-page.css');
+
+
 
 
 /* * {
     border: 1px red solid;
 }          */
-
-
-body {
-    background-color: black;
-}

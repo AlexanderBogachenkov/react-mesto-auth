@@ -25,12 +25,6 @@ function useEscapeKey(handleClose) {
 function ImagePopup({ card, onClose, closeAllPopupsByClickOnOverlay }) {
   useEscapeKey(onClose);
 
-  // function closeAllPopupsByClickOnOverlay(e) {
-  //   if (e.target === e.currentTarget) {
-  //     onClose();
-  //   }
-  // }
-
   return (
     //Если кард true добавляем popup_opened tag
     <div

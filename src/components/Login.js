@@ -3,7 +3,6 @@ import { useState } from "react";
 const Login = ({ handleLogin, isLoading, loggedIn }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  //   const [loginBtnText, setLoginBtnText] = useState("Войти");
 
   const loginBtnText = !isLoading ? "Войти" : "Секундочку...";
 
